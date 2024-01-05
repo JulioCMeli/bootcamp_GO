@@ -40,26 +40,7 @@ package main
 import (
 	"errors"
 	"fmt"
-	"os"
 )
-
-func runProgram() (err error) {
-	// defer function to recover from panic
-	defer func() {
-		if r := recover(); r != nil {
-			err = fmt.Errorf("Recovered from panic: %v", r)
-			panic("panic en defer func()")
-		}
-	}()
-
-	// open file
-	_, err = os.Open("sin-archivo.txt")
-	if err != nil {
-		panic(err)
-	}
-
-	return
-}
 
 type Customer struct {
 	ID          int
@@ -74,7 +55,10 @@ var lstCustomers []Customer
 var errValue = errors.New("Invalid value for Customer")
 
 func addCustomer(c Customer) {
+
 	fmt.Printf("Adding customer:  %v \n", c)
+
+	// defer function to recover from panic in same fuinciton scope
 	defer func() {
 		if r := recover(); r != nil {
 			fmt.Println(r)
