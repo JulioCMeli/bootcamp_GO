@@ -21,16 +21,16 @@ type Product struct {
 }
 
 func main() {
-	var a int = 20 /* actual variable declaration */
-	var ip *int    /* pointer variable declaration */
+	var a int = 20    /* actual variable declaration */
+	var p_a *int = &a /* pointer variable declaration and asigment to "a" address */
 
-	ip = &a /* store address of a in pointer variable*/
+	p_a = &a /* store address of a in pointer variable*/
 
 	fmt.Printf("Address of a variable: %x\n", &a)
 
 	/* address stored in pointer variable */
-	fmt.Printf("Address stored in ip variable: %x\n", ip)
+	fmt.Printf("Address stored in p_a variable: %x\n", p_a)
 
 	/* access the value using the pointer */
-	fmt.Printf("Value of *ip variable: %d\n", *ip)
+	fmt.Printf("Value of *p_a variable: %d\n", *p_a)
 }

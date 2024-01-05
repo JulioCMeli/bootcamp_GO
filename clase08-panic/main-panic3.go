@@ -50,11 +50,9 @@ type Customer struct {
 	Home        string
 }
 
-var lstCustomers []Customer
-
 var errValue = errors.New("Invalid value for Customer")
 
-func addCustomer(c Customer) {
+func addCustomer(c Customer, lstCustomers *[]Customer) {
 
 	fmt.Printf("Adding customer:  %v \n", c)
 
@@ -70,17 +68,16 @@ func addCustomer(c Customer) {
 		fmt.Println(err)
 		return
 	}
-	var r = customerExist(c.ID)
+	var r = customerExist(c.ID, *lstCustomers)
 	if r {
 		var msg = fmt.Sprintf("Error: client  with ID [%v] already exists", c.ID)
 		panic(msg)
 	} else {
-		lstCustomers = append(lstCustomers, c)
-
+		*lstCustomers = append(*lstCustomers, c)
 	}
 }
 
-func customerExist(id int) bool {
+func customerExist(id int, lstCustomers []Customer) bool {
 	for _, c := range lstCustomers {
 		if c.ID == id {
 			return true
@@ -116,6 +113,8 @@ func main() {
 		fmt.Println("Several errors were detected at runtime")
 	}()
 
+	var lstCustomers []Customer
+
 	var c1 Customer
 	c1.ID = 1
 	c1.File = "tbd"
@@ -124,8 +123,8 @@ func main() {
 	c1.Home = "tbd"
 	var c2 = Customer{
 		ID:          1,
-		File:        "",
-		Name:        "",
+		File:        "tbd",
+		Name:        "tbd",
 		PhoneNumber: "tbd",
 		Home:        "tbd"}
 	var c3 = Customer{
@@ -135,13 +134,13 @@ func main() {
 		PhoneNumber: "tbd",
 		Home:        "tbd"}
 
-	addCustomer(c1)
+	addCustomer(c1, &lstCustomers)
 	fmt.Printf("Customers: %v \n", lstCustomers)
 
-	addCustomer(c2)
+	addCustomer(c2, &lstCustomers)
 	fmt.Printf("Customers: %v \n", lstCustomers)
 
-	addCustomer(c3)
+	addCustomer(c3, &lstCustomers)
 	fmt.Printf("Customers: %v \n", lstCustomers)
 
 }
